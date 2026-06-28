@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cumpleaños de Matteo Daniel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nunito:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #1a0533;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle var(--d) ease-in-out infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from {
+        opacity: 0.2;
+        transform: scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    .balloon {
+      position: fixed;
+      bottom: -120px;
+      width: 40px;
+      animation: floatUp var(--dur) ease-in infinite;
+      animation-delay: var(--delay);
+      z-index: 1;
+    }
+
+    .balloon-body {
+      width: 40px;
+      height: 50px;
+      border-radius: 50% 50% 48% 48% / 60% 60% 40% 40%;
+      background: var(--color);
+      position: relative;
+      animation: sway 3s ease-in-out infinite alternate;
+    }
+
+    .balloon-body::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 18px;
+      background: #ccc;
+    }
+
+    @keyframes floatUp {
+      0% {
+        bottom: -120px;
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        bottom: 110vh;
+        opacity: 0;
+      }
+    }
+
+    @keyframes sway {
+      from {
+        transform: rotate(-8deg);
+      }
+
+      to {
+        transform: rotate(8deg);
+      }
+    }
+
+    .confetti-piece {
+      position: fixed;
+      top: -20px;
+      pointer-events: none;
+      animation: confettiFall var(--fdur) linear infinite;
+      animation-delay: var(--fdelay);
+      z-index: 1;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        top: -20px;
+        transform: rotate(0deg) translateX(0);
+        opacity: 1;
+      }
+
+      100% {
+        top: 110vh;
+        transform: rotate(720deg) translateX(60px);
+        opacity: 0.2;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: 30px;
+      max-width: 400px;
+      width: 100%;
+      padding: 40px 28px 36px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+      border: 3px solid #ff6fd8;
+      box-shadow: 0 0 0 6px rgba(255, 111, 216, 0.15), 0 20px 60px rgba(0, 0, 0, 0.4);
+      animation: cardPop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes cardPop {
+      from {
+        transform: scale(0.6);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .name {
+      font-family: 'Bubblegum Sans', cursive;
+      font-size: 56px;
+      color: #ff3cac;
+      line-height: 1.0;
+      margin-bottom: 6px;
+      animation: bounce 2s ease-in-out infinite;
+      text-shadow: 3px 3px 0 #ffb3e6, 6px 6px 0 rgba(255, 60, 172, 0.2);
+    }
+
+    .name span {
+      display: block;
+      font-size: 42px;
+      color: #ff8c00;
+      text-shadow: 3px 3px 0 #ffd280, 6px 6px 0 rgba(255, 140, 0, 0.2);
+      animation: bounce 2s ease-in-out infinite;
+      animation-delay: 0.15s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    .subtitle {
+      font-family: 'Bubblegum Sans', cursive;
+      font-size: 16px;
+      color: #a855f7;
+      letter-spacing: 2px;
+      margin-bottom: 22px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    .photo-wrap {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 24px;
+    }
+
+    .photo-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: conic-gradient(#ff3cac, #ff8c00, #ffe600, #00e5ff, #a855f7, #ff3cac);
+      animation: spin 4s linear infinite;
+    }
+
+    .photo-ring-inner {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .photo {
+      position: absolute;
+      inset: 6px;
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      border-radius: 50%;
+      object-fit: cover;
+      background: #f3e8ff;
+      z-index: 2;
+    }
+
+    .details {
+      background: linear-gradient(135deg, #fff0fb, #fff8e6);
+      border-radius: 18px;
+      padding: 18px 20px;
+      border: 2px dashed #ff3cac;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+
+    .detail-row {
+      display: flex;
+      gap: 10px;
+      padding: 9px 0;
+      font-size: 15px;
+      color: #333;
+      border-bottom: 1.5px dashed #ffb3e6;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      font-weight: 700;
+      color: #ff3cac;
+      min-width: 56px;
+      font-size: 14px;
+    }
+
+    .btn-confirm {
+      background: linear-gradient(135deg, #ff3cac, #a855f7);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 15px 0;
+      font-size: 18px;
+      font-family: 'Bubblegum Sans', cursive;
+      cursor: pointer;
+      width: 100%;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s;
+      box-shadow: 0 6px 20px rgba(255, 60, 172, 0.4);
+    }
+
+    .btn-confirm::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.25);
+      transform: skewX(-20deg);
+      animation: shine 2.5s ease-in-out infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+
+      50% {
+        left: 150%;
+      }
+
+      100% {
+        left: 150%;
+      }
+    }
+
+    .btn-confirm:hover {
+      transform: scale(1.04);
+    }
+
+    .btn-confirm:active {
+      transform: scale(0.97);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 0, 30, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 28px;
+      padding: 36px 28px 32px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      border: 3px solid #ff3cac;
+      box-shadow: 0 0 0 6px rgba(255, 60, 172, 0.15), 0 20px 60px rgba(0, 0, 0, 0.5);
+      transform: scale(0.7) translateY(40px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .modal-overlay.visible .modal {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: #ccc;
+      line-height: 1;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .modal-close:hover {
+      color: #ff3cac;
+      transform: rotate(90deg);
+    }
+
+    .modal-emoji {
+      font-size: 52px;
+      display: block;
+      margin-bottom: 10px;
+      animation: wiggle 1s ease-in-out infinite;
+    }
+
+    @keyframes wiggle {
+
+      0%,
+      100% {
+        transform: rotate(-8deg);
+      }
+
+      50% {
+        transform: rotate(8deg);
+      }
+    }
+
+    .modal h2 {
+      font-family: 'Bubblegum Sans', cursive;
+      font-size: 26px;
+      color: #ff3cac;
+      margin-bottom: 6px;
+      text-shadow: 2px 2px 0 #ffb3e6;
+    }
+
+    .modal p {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 22px;
+    }
+
+    .modal label {
+      display: block;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 700;
+      color: #a855f7;
+      margin-bottom: 6px;
+    }
+
+    .modal input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #ffb3e6;
+      border-radius: 14px;
+      font-size: 15px;
+      font-family: 'Nunito', sans-serif;
+      outline: none;
+      color: #333;
+      margin-bottom: 18px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .modal input:focus {
+      border-color: #ff3cac;
+      box-shadow: 0 0 0 4px rgba(255, 60, 172, 0.1);
+    }
+
+    .btn-enviar {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 0;
+      font-size: 17px;
+      font-family: 'Bubblegum Sans', cursive;
+      cursor: pointer;
+      width: 100%;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+      transition: transform 0.15s;
+    }
+
+    .btn-enviar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: skewX(-20deg);
+      animation: shine 2.5s ease-in-out infinite;
+    }
+
+    .btn-enviar:hover {
+      transform: scale(1.04);
+    }
+
+    .btn-enviar:active {
+      transform: scale(0.97);
+    }
+
+    /* Mini confeti modal */
+    .modal-confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 28px;
+    }
+
+    .mc {
+      position: absolute;
+      top: -10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      animation: mcFall var(--t) linear infinite var(--d);
+    }
+
+    @keyframes mcFall {
+      from {
+        top: -10px;
+        transform: rotate(0);
+        opacity: 1;
+      }
+
+      to {
+        top: 110%;
+        transform: rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="card">
+    <div class="name">
+      Matteo
+      <span>Daniel</span>
+    </div>
+    <div class="subtitle">cumple su primer añito</div>
+
+    <div class="photo-wrap">
+      <div class="photo-ring"></div>
+      <div class="photo-ring-inner"></div>
+      <img class="photo" src="https://i.postimg.cc/QtdMpdT3/Chat-GPT-Image-28-jun-2026-08-40-10-a-m.png" alt="Matteo Daniel">
+    </div>
+
+    <div class="details">
+      <div class="detail-row">
+        <span class="detail-label">Fecha</span>
+        <span>18 de julio, 2026</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Hora</span>
+        <span>4:00 p.m.</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-label">Lugar</span>
+        <span>Mz. I Lt. 2, Chavinillo</span>
+      </div>
+    </div>
+
+    <button class="btn-confirm" onclick="abrirModal()">Confirmar asistencia</button>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="cerrarModalFuera(event)">
+    <div class="modal" id="modal">
+
+      <div class="modal-confetti" id="modalConfetti"></div>
+
+      <button class="modal-close" onclick="cerrarModal()">✕</button>
+
+      <span class="modal-emoji">🎂</span>
+      <h2>Vas a la fiesta?</h2>
+      <p>Escribe tu nombre y avísale a la familia</p>
+
+      <label>Tu nombre</label>
+      <input type="text" id="nombreInput" placeholder="Escribe tu nombre...">
+
+      <button class="btn-enviar" onclick="enviarWhatsapp()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    // Estrellas
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 3 + 1;
+      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random() * 100}%;left:${Math.random() * 100}%;--d:${(Math.random() * 2 + 1).toFixed(1)}s;animation-delay:${(Math.random() * 3).toFixed(1)}s;`;
+      starsEl.appendChild(s);
+    }
+
+    // Globos
+    const colors = ['#ff3cac', '#ff8c00', '#ffe600', '#00e5ff', '#a855f7', '#ff6b6b', '#43e97b'];
+    for (let i = 0; i < 8; i++) {
+      const b = document.createElement('div');
+      b.className = 'balloon';
+      const body = document.createElement('div');
+      body.className = 'balloon-body';
+      body.style.setProperty('--color', colors[i % colors.length]);
+      b.appendChild(body);
+      b.style.cssText = `left:${Math.random() * 90}%;--dur:${(Math.random() * 6 + 6).toFixed(1)}s;--delay:${(Math.random() * 8).toFixed(1)}s;`;
+      document.body.appendChild(b);
+    }
+
+    // Confeti de fondo
+    for (let i = 0; i < 40; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      const w = Math.random() * 8 + 6;
+      c.style.cssText = `left:${Math.random() * 100}%;background:${colors[Math.floor(Math.random() * colors.length)]};width:${w}px;height:${w}px;border-radius:${Math.random() > 0.5 ? '50%' : '2px'};--fdur:${(Math.random() * 4 + 4).toFixed(1)}s;--fdelay:${(Math.random() * 6).toFixed(1)}s;`;
+      document.body.appendChild(c);
+    }
+
+    // Confeti del modal
+    const mc = document.getElementById('modalConfetti');
+    for (let i = 0; i < 20; i++) {
+      const c = document.createElement('div');
+      c.className = 'mc';
+      const w = Math.random() * 6 + 4;
+      c.style.cssText = `left:${Math.random() * 100}%;background:${colors[Math.floor(Math.random() * colors.length)]};width:${w}px;height:${w}px;border-radius:${Math.random() > 0.5 ? '50%' : '2px'};--t:${(Math.random() * 2 + 2).toFixed(1)}s;--d:${(Math.random() * 3).toFixed(1)}s;`;
+      mc.appendChild(c);
+    }
+
+    function abrirModal() {
+      document.getElementById('modalOverlay').classList.add('visible');
+      document.getElementById('nombreInput').focus();
+    }
+
+    function cerrarModal() {
+      document.getElementById('modalOverlay').classList.remove('visible');
+    }
+
+    function cerrarModalFuera(e) {
+      if (e.target === document.getElementById('modalOverlay')) cerrarModal();
+    }
+
+    function enviarWhatsapp() {
+      const nombre = document.getElementById('nombreInput').value.trim();
+      if (!nombre) {
+        document.getElementById('nombreInput').style.borderColor = '#ff3cac';
+        document.getElementById('nombreInput').placeholder = 'Pon tu nombre primero!';
+        return;
+      }
+      const mensaje =
+        `Hola! 🎉 Soy *${nombre}* y voy a asistir al cumpleaños de *Matteo Daniel* 🎂\n\n` +
+        `El pequeño cumple su *primer añito* y no me lo voy a perder!\n\n` +
+        `📅 *Fecha:* 18 de julio, 2026\n` +
+        `🕓 *Hora:* 4:00 p.m.\n` +
+        `📍 *Lugar:* Mz. I Lt. 2, Chavinillo\n\n` +
+        `Ahí estaré! 🥳`;
+      window.open(`https://wa.me/51960744792?text=${encodeURIComponent(mensaje)}`, '_blank');
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarModal(); });
+  </script>
+</body>
+
+</html>
